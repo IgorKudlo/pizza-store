@@ -21,7 +21,7 @@ const App = () => {
           <div className='content__items'>
             {
               pizzas.map((obj) => (
-                <PizzaBlock {...obj} />
+                <PizzaBlock key={obj.id} {...obj} />
               ))
             }
           </div>
