@@ -12,7 +12,8 @@ const PizzaBlock = ({ title, price, imageUrl, sizes, types }) => {
   const typeNames = ['тонкое', 'традиционное'];
 
   return (
-    <div className='pizza-block'>
+    <div className='pizza-block-wrapper'>
+      <div className='pizza-block'>
       <img
         className='pizza-block__image'
         src={imageUrl}
@@ -58,6 +59,7 @@ const PizzaBlock = ({ title, price, imageUrl, sizes, types }) => {
           <i>{pizzaCount}</i>
         </button>
       </div>
+    </div>
     </div>
   );
 };
