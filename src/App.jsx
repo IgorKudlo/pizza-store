@@ -1,11 +1,13 @@
 import Header from './components/Header';
 import Categories from './components/Categories';
 import Sort from './components/Sort';
-
-import './scss/app.scss';
 import PizzaBlock from './components/PizzaBlock';
 
-function App() {
+import './scss/app.scss';
+
+import pizzas from './assets/pizzas.json';
+
+const App = () => {
   return (
     <div className='wrapper'>
       <Header />
@@ -17,13 +19,16 @@ function App() {
           </div>
           <h2 className='content__title'>Все пиццы</h2>
           <div className='content__items'>
-            <PizzaBlock title="Мексиканская" price="500" />
-            <PizzaBlock title="Деревенская" price="350" />
+            {
+              pizzas.map((obj) => (
+                <PizzaBlock {...obj} />
+              ))
+            }
           </div>
         </div>
       </div>
     </div>
   );
-}
+};
 
 export default App;
