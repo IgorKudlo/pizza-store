@@ -1,19 +1,28 @@
 import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+
 import Categories from '../components/Categories';
 import Sort from '../components/Sort';
 import { Skeleton } from '../components/PizzaBlock/Skeleton';
 import PizzaBlock from '../components/PizzaBlock';
 import { Pagination } from '../components/Pagination';
 import { SearchContext } from '../App';
+import { setCategoryId } from '../redux/slices/filterSlice';
 
 const Home = () => {
   const { searchValue } = React.useContext(SearchContext);
 
   const [items, setItems] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(true);
-  const [categoryId, setCategoryId] = React.useState(0);
-  const [sortType, setSortType] = React.useState({ name: 'популярности', sortProperty: 'rating' });
   const [currentPage, setCurrentPage] = React.useState(1);
+
+  const categoryId = useSelector((state) => state.filter.categoryId);
+  const sortType = useSelector((state) => state.filter.sort);
+  const dispatch = useDispatch();
+
+  const onChangeCategory = (id) => {
+    dispatch(setCategoryId(id))
+  }
 
   React.useEffect(() => {
     setIsLoading(true);
@@ -37,16 +46,11 @@ const Home = () => {
 
   const pizzas = items.map((obj) => <PizzaBlock key={obj.id} {...obj} />);
 
-  // if static array
-  /*const pizzas = items.filter((obj) => {
-    return obj.title.toLowerCase().includes(searchValue.toLowerCase())
-  }).map((obj) => <PizzaBlock key={obj.id} {...obj} />);*/
-
   return (
     <div className='container'>
       <div className='content__top'>
-        <Categories value={categoryId} onChangeCategory={setCategoryId} />
-        <Sort value={sortType} onChangeSort={setSortType} />
+        <Categories value={categoryId} onChangeCategory={(id) => onChangeCategory(id)} />
+        <Sort />
       </div>
       <h2 className='content__title'>Все пиццы</h2>
       <div className='content__items'>
